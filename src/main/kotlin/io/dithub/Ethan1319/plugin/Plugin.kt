@@ -4,6 +4,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -16,7 +17,7 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 
-class InventoryExpandPlugin : JavaPlugin(), Listener, org.bukkit.command.TabExecutor {
+class Plugin : JavaPlugin(), Listener, org.bukkit.command.TabExecutor, CommandExecutor {
 
     private val playerInventories: MutableMap<UUID, Inventory> = mutableMapOf()
     private lateinit var dataFile: File
@@ -44,7 +45,7 @@ class InventoryExpandPlugin : JavaPlugin(), Listener, org.bukkit.command.TabExec
         saveInventories()
     }
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (sender !is Player) {
             sender.sendMessage("플레이어만 사용할 수 있습니다.")
             return true
