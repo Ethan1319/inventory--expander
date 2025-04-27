@@ -40,11 +40,11 @@ class InventoryExpandPlugin : JavaPlugin(), Listener, org.bukkit.command.TabExec
     }
 
     override fun onDisable() {
-        // 서버 종료 시 저장
+
         saveInventories()
     }
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
+    fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (sender !is Player) {
             sender.sendMessage("플레이어만 사용할 수 있습니다.")
             return true
@@ -58,7 +58,7 @@ class InventoryExpandPlugin : JavaPlugin(), Listener, org.bukkit.command.TabExec
         }
 
         player.openInventory(inventory)
-        player.sendMessage("추가 인벤토리를 열었습니다!")
+        player.sendMessage("추가 인벤토리를 열었어용!")
 
         return true
     }
@@ -78,7 +78,7 @@ class InventoryExpandPlugin : JavaPlugin(), Listener, org.bukkit.command.TabExec
         }
     }
 
-    // 개별 플레이어 인벤토리 저장
+
     private fun saveInventory(uuid: UUID, inventory: Inventory) {
         val itemsList = inventory.contents.map { it ?: ItemStack(Material.AIR) }
         dataConfig.set(uuid.toString(), itemsList)
@@ -89,14 +89,14 @@ class InventoryExpandPlugin : JavaPlugin(), Listener, org.bukkit.command.TabExec
         }
     }
 
-    // 전체 저장
+
     private fun saveInventories() {
         for ((uuid, inventory) in playerInventories) {
             saveInventory(uuid, inventory)
         }
     }
 
-    // 저장된 인벤토리 불러오기
+
     private fun loadInventories() {
         for (key in dataConfig.getKeys(false)) {
             val uuid = UUID.fromString(key)
