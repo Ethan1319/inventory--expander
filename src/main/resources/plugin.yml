@@ -1,8 +1,8 @@
 name: plugin
 version: '1.0-SNAPSHOT'
-main: io.dithub.Ethan1319.plugin.Plugin
+main: io.github.Ethan1319.plugin.Plugin
 api-version: '1.21'
 commands:
   expandinv:
     description: 추가 인벤토리를 엽니다
-    usage: /expandinv
+    usage: /inv

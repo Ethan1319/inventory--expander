@@ -1,9 +1,10 @@
-package io.dithub.Ethan1319.plugin
+package io.github.Ethan1319.plugin
 
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -16,7 +17,7 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 
-class InventoryExpandPlugin : JavaPlugin(), Listener, org.bukkit.command.TabExecutor {
+class Plugin : JavaPlugin(), Listener, org.bukkit.command.TabExecutor, CommandExecutor {
 
     private val playerInventories: MutableMap<UUID, Inventory> = mutableMapOf()
     private lateinit var dataFile: File
@@ -36,15 +37,15 @@ class InventoryExpandPlugin : JavaPlugin(), Listener, org.bukkit.command.TabExec
 
         // 리스너, 명령어 등록
         server.pluginManager.registerEvents(this, this)
-        getCommand("expandinv")?.setExecutor(this)
+        getCommand("inv")?.setExecutor(this)
     }
 
     override fun onDisable() {
-
+        // 서버 종료 시 저장
         saveInventories()
     }
 
-    fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (sender !is Player) {
             sender.sendMessage("플레이어만 사용할 수 있습니다.")
             return true
@@ -58,7 +59,7 @@ class InventoryExpandPlugin : JavaPlugin(), Listener, org.bukkit.command.TabExec
         }
 
         player.openInventory(inventory)
-        player.sendMessage("추가 인벤토리를 열었어용!")
+        player.sendMessage("추가 인벤토리를 열었습니다!")
 
         return true
     }
